@@ -1,11 +1,4 @@
-var db = require("../models");
-
 module.exports = function (app) {
-    app.get("/", function (req, res) {
-        
-    });
-
-    app.get("/saved", function (req, res) {
-        
-    });
+    require("./view-routes")(app);
+    require("./api-routes")(app);
 }

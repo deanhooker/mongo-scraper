@@ -14,13 +14,8 @@ var app = express();
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-app.get('/', function (req, res) {
-    res.render('home');
-});
-
-app.get('/saved', function (req, res) {
-    res.render('saved');
-});
+// Require routes folder
+require("./routes")(app);
 
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
