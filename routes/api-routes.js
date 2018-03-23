@@ -1,10 +1,12 @@
 var request = require("request");
 var cheerio = require("cheerio");
+var db = require("../models");
 
 module.exports = function (app) {
     app.get("/scrape", function (req, res) {
         // First, we grab the body of the html with request
         request("https://www.nytimes.com/", function (error, response, html) {
+
             // Then, we load that into cheerio and save it to $ for a shorthand selector
             var $ = cheerio.load(html);
 
@@ -12,22 +14,32 @@ module.exports = function (app) {
             var results = [];
             // With cheerio, find each p-tag with the "title" class
             // (i: iterator. element: the current element)
-            $('h2.story-heading').each(function (i, element) {
-                
-                // Save the text of the element in a "title" variable
-                var title = $(element).text();
-                // In the currently selected element, look at its child elements (i.e., its a-tags),
-                // then save the values for any "href" attributes that the child elements may have
-                var link = $(element).children().attr('href');
+            $('article.story').each(function (i, element) {
+
+                // Save the parts we want from each element
+                var title = $(element).find('.story-heading').text();
+                var summary = $(element).find('.summary').text();
+                var link = $(element).find('.story-heading').find('a').attr('href');
                 // Save these results in an object that we'll push into the results array we defined earlier
                 results.push({
                     title: title,
+                    summary: summary,
                     link: link
                 });
             });
-            // Log the results once you've looped through each of the elements found with cheerio
-            console.log(results);
-            res.send("Scrape Complete");
+
+            // create an article in our database for each article obj pushed into the results array with predefined keys that correspond to the keys of the database collection
+            results.forEach(data => {
+                db.Headline
+                    .create(data)
+                    .then(dbHeadline => {
+
+                    }).catch(err => {
+                        // If an error occurred, log it, with the catch statement, the program won't crash when it runs into a duplicate key error
+                        console.log(err.errmsg);
+                    })
+            })
+            res.send(results);
         });
     });
 }
