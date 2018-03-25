@@ -2,3 +2,7 @@
     background: linear-gradient( rgba(29, 29, 29, 0.5), rgba(29, 29, 29, 0.5) ), url("../img/morning-newspaper-image.jpg");
     background-size: cover;
 }
+
+.card {
+    width:100%;
+}

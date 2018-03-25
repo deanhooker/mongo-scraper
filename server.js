@@ -1,36 +1,21 @@
-var express = require("express");
+var express = require('express');
+// var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
 
-// Require all models
-var db = require("./models");
+var router = require('./routes/routes.js');
 
-var PORT = 3000;
-
-// Initialize Express
 var app = express();
 
+var PORT = process.env.PORT || 3000;
+
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/', router);
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+app.use(express.static(__dirname + '/public'));
 
-// Require routes folder
-require("./routes")(app);
-
-// Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static("public"));
-
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
-// Set mongoose to leverage built in JavaScript ES6 Promises
-// Connect to the Mongo DB
-// mongoose.Promise = Promise;
-// mongoose.connect(MONGODB_URI, {
-//   useMongoClient: true
-// });
-
-// Start the server
-app.listen(PORT, function () {
-    console.log("App running on port " + PORT + "!");
+// Start express app
+app.listen(PORT, function(err){
+        console.log("App running on port: " + PORT);
 });
