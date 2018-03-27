@@ -27,7 +27,45 @@
                 </a>
                 <p class="card-text">{{articles.description}}</p>
                 <p class="card-text">{{articles.link}}</p>
+                <button id="add-note" type="button" class="btn btn-primary float-left ml-auto">Add Note</button>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        {{#each articles.notes}}
+        <div class="card">
+            <div class="card-body">
+                <p>{{articles.notes.body}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+<div id="new-note-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a note</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/articles/:id/notes" method="post">
+                <div class="modal-body">
+                    <div>
+                        <textarea name="title" class="form-control" id="title" placeholder="Enter a title for your note" type="text" rows="1"></textarea>
+                    </div>
+                    <br>
+                    <div>
+                        <textarea name="body" class="form-control" rows="5" placeholder="Enter note here..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="create-note" type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

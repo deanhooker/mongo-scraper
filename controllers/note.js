@@ -1,6 +1,8 @@
 var db = require("../models");
 
 function addNote(req, res) {
+    console.log("got here!");
+    console.log(req.body);
     db.Note.create(req.body)
         .then(function (dbNote) {
             return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true });
@@ -8,7 +10,7 @@ function addNote(req, res) {
         .then(function (dbArticle) {
 
             // If the User was updated successfully, send it back to the client
-            res.redirect("/#" + req.params.id);
+            res.redirect("/article/" + req.params.id);
         })
         .catch(function (err) {
 
@@ -23,10 +25,10 @@ function deleteNote(req, res) {
     })
         .then(function (deleted) {
             console.log("Note deleted");
-            res.redirect("/#" + req.params.id);
+            res.redirect("/article/" + req.params.id);
         })
         .catch(function (err) {
-            console.log(error);
+            console.log(err);
         });
 }
 

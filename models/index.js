@@ -2,9 +2,10 @@ var mongoose = require("mongoose");
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.Promise = Promise;
+
 mongoose.connect(MONGODB_URI, {
     useMongoClient: true
-  });
+});
 
 mongoose.connection.on('connected', function () {
     console.log('Mongoose connected');
@@ -26,7 +27,7 @@ process.on('SIGINT', function () {
         console.log('Mongoose disconnected through app termination');
         process.exit(0);
     });
-}); 
+});
 
 module.exports = {
     Article: require("./Article"),

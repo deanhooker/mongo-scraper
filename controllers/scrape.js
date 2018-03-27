@@ -13,6 +13,7 @@ function scrape(req, res) {
             var results = [];
 
             $('article.story').each(function (i, element) {
+
                 var result = {};
 
                 result.title = $(this)
@@ -40,7 +41,6 @@ function scrape(req, res) {
                 console.log(err);
             });
         }
-
         res.redirect("/");
     });
 }

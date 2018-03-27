@@ -1,5 +1,5 @@
 var express = require('express');
-// var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 
 var router = require('./routes/routes.js');
@@ -8,7 +8,7 @@ var app = express();
 
 var PORT = process.env.PORT || 3000;
 
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', router);
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
