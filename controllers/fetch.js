@@ -1,4 +1,5 @@
 var db = require("../models");
+var ObjectId = require('mongodb').ObjectId;
 
 function fetch(req, res) {
 
@@ -17,4 +18,28 @@ function fetch(req, res) {
         });
 }
 
-module.exports = {fetch};
+function singleArticle(req, res) {
+
+    var articleID = req.params.id;
+    var searchID = new ObjectId(articleID)
+    db.Article.findById({
+        "_id": searchID
+    })
+        .populate("notes")
+        .exec(function (err, articles) {
+            if (err) { console.log(err); }
+            console.log(articles);
+            db.Article
+                .count()
+                .exec(function(err, count) {
+                    if (err) {console.log(err)}
+                    res.render("selectedarticle", {
+                        articles
+                    });
+                });
+        });
+}
+
+module.exports = {
+    fetch, singleArticle
+};
