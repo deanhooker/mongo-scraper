@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-var Note = require("./Note");
+var Note = require("./NNote");
 var Article = require("./Article");
 
 mongoose.Promise = Promise;
