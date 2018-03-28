@@ -30,6 +30,6 @@ process.on('SIGINT', function () {
 });
 
 module.exports = {
-    Article: require("./Article"),
-    Note: require("./Note")
+    Article: require("./Article.js"),
+    Note: require("./Note.js")
 };
