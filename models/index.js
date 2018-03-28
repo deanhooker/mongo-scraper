@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var Note = require("./Note");
+var Article = require("./Article");
 
 mongoose.Promise = Promise;
 
@@ -30,6 +32,5 @@ process.on('SIGINT', function () {
 });
 
 module.exports = {
-    Article: require("./Article.js"),
-    Note: require("./Note.js")
+    Article, Note
 };
